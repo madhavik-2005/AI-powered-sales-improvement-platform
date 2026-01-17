@@ -1,0 +1,11 @@
+streamlit
+boto3
+faiss-cpu
+sentence-transformers
+
+langchain==0.1.16
+langchain-core==0.1.53
+langchain-community==0.0.36
+langchain-aws==0.1.6
+langsmith==0.1.31
+pydantic==1.10.13
