@@ -21,4 +21,9 @@ Transcript:
 Relevant Sales Knowledge:
 {context}
 """
-        return self.chain.invoke({"input": combined_input})["text"]
+        response = self.chain.invoke({"input": combined_input})
+
+        if isinstance(response, dict):
+            return response.get("text") or response.get("output_text") or str(response)
+
+        return str(response)
