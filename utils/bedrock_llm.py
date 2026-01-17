@@ -1,18 +1,11 @@
-import os
-from langchain_community.llms import FakeListLLM
 from langchain_community.chat_models import BedrockChat
-
+import os
 
 def get_llm():
-    """
-    Returns an LLM instance.
-    Uses FakeLLM when USE_FALLBACK=true
-    Uses Amazon Bedrock (Claude 3 Haiku) otherwise
-    """
-
-    use_fallback = os.getenv("USE_FALLBACK", "true").lower() == "true"
+    use_fallback = os.getenv("USE_FALLBACK", "false").lower() == "true"
 
     if use_fallback:
+        from langchain_community.llms import FakeListLLM
         return FakeListLLM(
             responses=[
                 "The customer showed interest but raised pricing concerns.",
@@ -23,7 +16,7 @@ def get_llm():
 
     return BedrockChat(
         model_id="anthropic.claude-3-haiku-20240307-v1:0",
-        region_name="us-east-1",
+        region_name=os.getenv("AWS_DEFAULT_REGION", "us-east-1"),
         model_kwargs={
             "temperature": 0.3,
             "max_tokens": 500
